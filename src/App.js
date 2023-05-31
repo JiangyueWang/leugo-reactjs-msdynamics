@@ -1,22 +1,23 @@
 //General imports
 import './assets/App.css';
-import { Routes, Route } from "react-router-dom";
-
+//Import components from msal-react package
+import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react';
 //Import Pages
 import HomePage from './pages/HomePage/HomePage';
+import UnauthenticatedHomePage from './pages/HomePage/UnauthenticatedHomePage';
 
 function App() {
   return (
     <div>
+        <AuthenticatedTemplate>
+          <HomePage />
+          
+        </AuthenticatedTemplate>
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage />
-          }
-        />
-      </Routes>
+        <UnauthenticatedTemplate>
+          <UnauthenticatedHomePage />
+        </UnauthenticatedTemplate>
+
 
     </div>
   );
