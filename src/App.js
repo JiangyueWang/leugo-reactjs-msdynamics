@@ -5,10 +5,12 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-reac
 //Import Pages
 import HomePage from './pages/HomePage/HomePage';
 import UnauthenticatedHomePage from './pages/HomePage/UnauthenticatedHomePage';
+import SiteHeader from './pages/SiteHeader/SiteHeader';
 
 function App() {
   return (
     <div>
+      <SiteHeader />
         <AuthenticatedTemplate>
           <HomePage />
           
