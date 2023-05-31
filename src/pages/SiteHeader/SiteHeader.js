@@ -1,7 +1,9 @@
 import { SignInButton } from "../../components/SignInButton/SignInButton"
 import { SignOutButton } from "../../components/SignOutButton/SignOutButton"
+import { useIsAuthenticated } from "@azure/msal-react";
 
 const SiteHeader = () => {
+    const isAuthenticated = useIsAuthenticated();
     return(
         <div>     
             <p>logo</p>  
@@ -12,8 +14,7 @@ const SiteHeader = () => {
                 <li>wish list</li>
             </ul>
             </nav>
-            <SignInButton />
-            <SignOutButton />
+            {isAuthenticated ? <SignOutButton /> : <SignInButton />}
         </div>
 
     )
