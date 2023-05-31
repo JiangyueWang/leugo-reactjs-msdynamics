@@ -1,3 +1,6 @@
+import { SignInButton } from "../../components/SignInButton/SignInButton"
+import { SignOutButton } from "../../components/SignOutButton/SignOutButton"
+
 const SiteHeader = () => {
     return(
         <div>     
@@ -9,8 +12,8 @@ const SiteHeader = () => {
                 <li>wish list</li>
             </ul>
             </nav>
-            <button>sign in</button>
-            <button>sign out</button>
+            <SignInButton />
+            <SignOutButton />
         </div>
 
     )
