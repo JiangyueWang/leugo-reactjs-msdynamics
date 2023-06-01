@@ -1,7 +1,26 @@
+import React, { useState } from 'react';
+import { useMsal } from '@azure/msal-react';
+import { loginRequest } from '../../context/authConfig';
+
 const HomePage = () => {
+    const {instance, accounts} = useMsal();
+    const [user, setUser] = useState(null);
+    console.log(instance)
+    console.log(accounts)
+
+    if(accounts.length > 0 && !user) 
+    {
+        instance.acquireTokenSilent({
+            ...loginRequest,
+            account: accounts[0],
+        }).then(response => {
+            setUser(response.account);
+        });
+    }
+
     return (        
     <div>
-        <h1>Logged In HomePage</h1>
+        <p>Hello {user.name}</p>
     </div>)
 
 }
