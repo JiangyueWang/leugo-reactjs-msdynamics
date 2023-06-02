@@ -28,8 +28,6 @@ const HomePage = () => {
                 });
               }
             }); 
-            console.log(data);
-            console.log(user.idTokenClaims.oid);
     }, [instance, accounts])
 
 
@@ -39,11 +37,17 @@ const HomePage = () => {
         {data && (
         <div>
           <p>Data:</p>
-          <ul>
+            {data&&user ? (
+                <ul>
+                    <li>total number of sets owned: {data[1][0].count}</li>
+                    <li>total number of brikes: {data[0][0].partstotal}</li>
+                </ul>) : null}
+          
+          {/* <ul>
             {data.map(item => (
               <li key={item.id}>{item.cr8fb_setnumber} {item.cr8fb_name}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       )}
     </div>)
