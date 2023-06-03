@@ -15,7 +15,7 @@ function App() {
     <div>
       <SiteHeader />
         <Routes>
-            <Route path="/" element={
+            <Route path="/home" element={
               <AuthenticatedTemplate >
                 <HomePage />
               </AuthenticatedTemplate>
@@ -26,7 +26,6 @@ function App() {
             {<UnauthenticatedTemplate>
               <UnauthenticatedHomePage />
             </UnauthenticatedTemplate>} />
-
         </Routes>
     </div>
   );

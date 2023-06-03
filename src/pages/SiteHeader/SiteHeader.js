@@ -16,7 +16,7 @@ const SiteHeader = () => {
                 {user ? 
                     (<div>
                         <li>
-                            <Link to={`/`}>home</Link>
+                            <Link to={`/home`}>home</Link>
                         </li>
                         <li>
                             <Link to={`${user.name}/collection`}>collection</Link>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../context/authConfig";
-
+import { useNavigate} from "react-router-dom";
 
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
@@ -10,14 +10,19 @@ import { loginRequest } from "../../context/authConfig";
 
 export const SignInButton = () => {
   const { instance } = useMsal();
+  const navigate = useNavigate();
 
   const handleLogin = (loginType) => {
     if (loginType === "popup") {
-      instance.loginPopup(loginRequest).catch((e) => {
+      instance.loginPopup(loginRequest).then(() => {
+        navigate({pathname: "/home"})
+      }).catch((e) => {
         console.log(e);
       });
     } else if (loginType === "redirect") {
-      instance.loginRedirect(loginRequest).catch((e) => {
+      instance.loginRedirect(loginRequest).then(() => {
+        navigate({pathname: "/home"})
+      }).catch((e) => {
         console.log(e);
       });
     }
