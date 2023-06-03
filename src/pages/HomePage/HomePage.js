@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { loginRequest } from '../../context/authConfig';
 import { callMsDataverse } from '../../utils/dataverse';
 import { InteractionRequiredAuthError } from '@azure/msal-browser';
 //https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/hooks.md
@@ -30,13 +29,22 @@ const HomePage = () => {
             }); 
     }, [instance, accounts])
 
+    useEffect(() => {
 
+        if (data&& user) {
+            data.map((item, index) => {
+            console.log(item[0])
+            return index
+        })
+
+        }
+    }, [data, user])
     return (        
     <div>
         <p>Hello {user.name}</p>
         {data && (
         <div>
-          <p>Data:</p>
+          <p>Dashboard</p>
             {data&&user ? (
                 <ul>
                     <li>total number of sets owned: {data[1][0].count}</li>
