@@ -3,7 +3,8 @@ import axios from 'axios';
  * Attaches a given access token to a MS Graph API call. Returns information about the user
  * @param accessToken 
  */
-export const callMsDataverse = async (accessToken, useroid) => {
+export const callMsDataverse = async (accessToken, useroid, page) => {
+  let urls; 
   // url to return sets for loggin user
   const url = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections?$filter=_cr8fb_aaduser_value eq '${useroid}'`;
   //sum of all number of parts
@@ -14,10 +15,11 @@ export const callMsDataverse = async (accessToken, useroid) => {
   // // filtered by the user first then groupped by theme then count how many sets in each theme
   // const url2 = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections?$filter=_cr8fb_aaduser_value eq '${useroid}'
   //                         &$apply=groupby((cr8fb_theme), aggregate($count as count))`
-  const urls = [
-    url1, 
-    url2, 
-  ]
+  if(page === 'collection') {
+    urls = [url]
+  } else if (page === 'home') {
+    urls = [url1, url2]
+  }
 
   const headers = {
     Authorization: `Bearer ${accessToken}`,

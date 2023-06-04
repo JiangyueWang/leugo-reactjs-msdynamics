@@ -14,10 +14,11 @@ const HomePage = () => {
             scopes: [`https://${process.env.REACT_APP_AAD_DYNAMICS_ENVIRONMENT}.api.crm.dynamics.com/user_impersonation`],
             account: accounts[0],
           };
-          instance
+          if(user) {
+            instance
             .acquireTokenSilent(tokenRequest)
             .then((response) => {
-              callMsDataverse(response.accessToken, user.idTokenClaims.oid).then(setData);
+              callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'home').then(setData);
             })
             .catch((error) => {
               if (error instanceof InteractionRequiredAuthError) {
@@ -27,18 +28,9 @@ const HomePage = () => {
                 });
               }
             }); 
+          }
     }, [instance, accounts])
 
-    useEffect(() => {
-
-        if (data&& user) {
-            data.map((item, index) => {
-            console.log(item[0])
-            return index
-        })
-
-        }
-    }, [data, user])
     return (        
     <div>
         <p>Hello {user.name}</p>
