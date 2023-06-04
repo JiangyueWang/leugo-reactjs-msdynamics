@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { callMsDataverse } from '../../utils/dataverse';
 import { InteractionRequiredAuthError } from '@azure/msal-browser';
 import { useMsal, useAccount } from '@azure/msal-react';
+import SetsInfoInCollectionPage from '../../components/SetsInfoInCollectionPage/SetsInforInCollectionPage';
 
 const CollectionPage = () => {
     const {instance, accounts} = useMsal();
@@ -37,12 +38,15 @@ const CollectionPage = () => {
             </h1>
             {user&&data ? (data[0].map(set => {
                 return (
-                    <div>
-                        <img src={set.cr8fb_setimageurl} alt="" />
-                        <li>{set.cr8fb_name}</li>
-                        <li>{set.cr8fb_setnumber}</li>
-                    </div>
-                    
+                    <SetsInfoInCollectionPage 
+                        img = {set.cr8fb_setimageurl}
+                        setName = {set.cr8fb_name}
+                        setNumber = {set.cr8fb_setnumber}  
+                        releaseYear = {set.cr8fb_releaseyear}
+                        theme = {set.cr8fb_theme}
+                        purchaseDate = {set.cr8fb_purchasedate}
+                        buildCompletionDate = {set.cr8fb_buildcompletiondate}
+                        />
                     )
             })) : null}
         </div>
