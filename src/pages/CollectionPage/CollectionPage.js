@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { callMsDataverse } from '../../utils/dataverse';
 import { InteractionRequiredAuthError } from '@azure/msal-browser';
 import { useMsal, useAccount } from '@azure/msal-react';
-import SetsInfoInCollectionPage from '../../components/SetsInfoInCollectionPage/SetsInforInCollectionPage';
+import SetsInfoInCollectionPage from '../../components/CollectionPageComponents/SetsInfoInCollectionPage/SetsInforInCollectionPage';
 
 const CollectionPage = () => {
     const {instance, accounts} = useMsal();
