@@ -19,9 +19,9 @@ const SetsInfoInCollectionPage = (props) => {
                     <p>Release year: {props.releaseYear}</p>
                     <p>Theme: {props.theme}</p>
                     <p>Purchase date: {dayjs(props.purchaseDate).format('DD/MM/YYYY')}</p>
-                    <UpdateDateForm date={`purchasedate`} setId={props.setId}/>
+                    <UpdateDateForm date={`purchasedate`} setId={props.setId} setData={props.setData} user={props.user} userToken={props.userToken}/>
                     <p>Build completion date:{dayjs(props.buildCompletionDate).format('DD/MM/YYYY')}</p>
-                    <UpdateDateForm date={`buildcompletiondate`} setId={props.setId}/>
+                    <UpdateDateForm date={`buildcompletiondate`} setId={props.setId} setData={props.setData} user={props.user} userToken={props.userToken}/>
                 </div>
             ) : null}
         </div>

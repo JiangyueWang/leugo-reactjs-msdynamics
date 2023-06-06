@@ -7,38 +7,50 @@ import SetsInfoInCollectionPage from '../../components/CollectionPageComponents/
 const CollectionPage = () => {
     const {instance, accounts} = useMsal();
     const user = useAccount(accounts[0] || {});
-    const [data, setData] = useState(null);
+    const [data, setData] = useState('');
+    const [userToken, setUserToken] = useState('')
+    
+    const fetechDataInCollectionTable = () => {
+      const tokenRequest = {
+        scopes: [`https://${process.env.REACT_APP_AAD_DYNAMICS_ENVIRONMENT}.api.crm.dynamics.com/user_impersonation`],
+        account: accounts[0],
+      };
+      if(user) {
+        instance
+        .acquireTokenSilent(tokenRequest)
+        .then((response) => {
+          setUserToken(response.accessToken);
+          callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'collection')
+          .then((data) => {
+              setData(data);
 
+            });
+        })
+        .catch((error) => {
+            if (error instanceof InteractionRequiredAuthError) {
+              instance.acquireTokenPopup(tokenRequest)
+              .then((response) => {
+                callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'collection')
+                .then((data) => setData(data));
+              });
+            }
+          }); 
+      }  
+      }
     useEffect(() => {
-        const tokenRequest = {
-            scopes: [`https://${process.env.REACT_APP_AAD_DYNAMICS_ENVIRONMENT}.api.crm.dynamics.com/user_impersonation`],
-            account: accounts[0],
-          };
-        if(user) {
-            instance
-            .acquireTokenSilent(tokenRequest)
-            .then((response) => {
-              callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'collection').then(setData);
-            })
-            .catch((error) => {
-                if (error instanceof InteractionRequiredAuthError) {
-                  instance.acquireTokenPopup(tokenRequest)
-                  .then((response) => {
-                    callMsDataverse(response.accessToken).then((response) => setData(response));
-                  });
-                }
-              }); 
-        }   
-    }, [instance, accounts])
-
+      fetechDataInCollectionTable();
+    }, [instance, accounts,])
     return(
         <div>
             <h1> 
                 Sets in Collection
             </h1>
-            {user&&data ? (data[0].map(set => {
+            {data ? (data[0].map(set => {
                 return (
                     <SetsInfoInCollectionPage 
+                        setData = {setData}
+                        userToken = {userToken}
+                        user = {user}
                         img = {set.cr8fb_setimageurl}
                         setName = {set.cr8fb_name}
                         setNumber = {set.cr8fb_setnumber}  
@@ -47,6 +59,7 @@ const CollectionPage = () => {
                         purchaseDate = {set.cr8fb_purchasedate}
                         buildCompletionDate = {set.cr8fb_buildcompletiondate}
                         setId = {set.cr8fb_collectionid}
+                        fetechDataInCollectionTable = {fetechDataInCollectionTable}
                         />
                     )
             })) : null}

@@ -35,7 +35,6 @@ export const callMsDataverse = async (accessToken, useroid, page) => {
       urls.map((url) => axios.get(url, { headers }))
     )
     const data = responses.map((response) => response.data.value);
-    console.log(data)
     return data
   } catch (error) {
       console.error('Error fetching tables:', error);
