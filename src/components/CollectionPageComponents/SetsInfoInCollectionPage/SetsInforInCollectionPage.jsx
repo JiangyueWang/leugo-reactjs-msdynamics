@@ -1,6 +1,6 @@
 import { React, useState } from "react"
 import UpdateDateForm from "../UpdateDateForm/UpdateDateForm";
-// import UpdateDatesForm from "../UpdateDatesForm/UpdateDatesForm";
+import dayjs from 'dayjs';
 
 const SetsInfoInCollectionPage = (props) => {
     const [viewDetailBtnClick, setViewDetailedBtnClick] = useState(false);
@@ -18,10 +18,10 @@ const SetsInfoInCollectionPage = (props) => {
                 <div>
                     <p>Release year: {props.releaseYear}</p>
                     <p>Theme: {props.theme}</p>
-                    <p>Purchase date: {props.purchaseDate}</p>
-                    <UpdateDateForm date={`purchasedate`} />
-                    <p>Build completion date:{props.buildCompletionDate}</p>
-                    <UpdateDateForm date={`buildcompletiondate`} />
+                    <p>Purchase date: {dayjs(props.purchaseDate).format('DD/MM/YYYY')}</p>
+                    <UpdateDateForm date={`purchasedate`} setId={props.setId}/>
+                    <p>Build completion date:{dayjs(props.buildCompletionDate).format('DD/MM/YYYY')}</p>
+                    <UpdateDateForm date={`buildcompletiondate`} setId={props.setId}/>
                 </div>
             ) : null}
         </div>

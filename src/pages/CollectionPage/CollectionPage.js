@@ -46,6 +46,7 @@ const CollectionPage = () => {
                         theme = {set.cr8fb_theme}
                         purchaseDate = {set.cr8fb_purchasedate}
                         buildCompletionDate = {set.cr8fb_buildcompletiondate}
+                        setId = {set.cr8fb_collectionid}
                         />
                     )
             })) : null}

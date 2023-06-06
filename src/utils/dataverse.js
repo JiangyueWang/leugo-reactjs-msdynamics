@@ -51,3 +51,30 @@ export const callMsDataverse = async (accessToken, useroid, page) => {
   // }
     
 }
+
+
+export const updateDataDataverse = async (accessToken, setId, date, isoDate) => {
+
+  // update dates to a set
+  const url = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections(${setId})`;
+  console.log(`url ${url}`);
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    'OData-MaxVersion': '4.0',
+    'OData-Version': '4.0',
+    'Content-Type': 'application/json',
+  };
+  let body = {};
+  body[`cr8fb_${date}`] = isoDate;
+  console.log(body);
+  console.log(`headers ${headers}`)
+  console.log('PATCH Request made to Dataverse at: ' + new Date().toString());
+
+  try {
+      const response = await axios.patch(url, body, { headers });
+      return response;
+    } catch (error) {
+        console.error('Error fetching tables:', error);
+        throw error;
+    }
+}
