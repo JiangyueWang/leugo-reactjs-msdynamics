@@ -3,11 +3,14 @@ import { callMsDataverse } from '../../utils/dataverse';
 import { InteractionRequiredAuthError } from '@azure/msal-browser';
 //https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-react/docs/hooks.md
 import { useMsal, useAccount } from '@azure/msal-react';
+import useUserAuth from '../../hooks/useUserAuth';
 
 const HomePage = () => {
     const {instance, accounts} = useMsal();
     const user = useAccount(accounts[0] || {});
     const [data, setData] = useState(null);
+
+    const [userContext, tokenContext] = useUserAuth();
 
     useEffect(() => {
         const tokenRequest = {
