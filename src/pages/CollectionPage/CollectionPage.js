@@ -1,45 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { callMsDataverse } from '../../utils/dataverse';
-import { InteractionRequiredAuthError } from '@azure/msal-browser';
-import { useMsal, useAccount } from '@azure/msal-react';
 import SetsInfoInCollectionPage from '../../components/CollectionPageComponents/SetsInfoInCollectionPage/SetsInforInCollectionPage';
+import useUserAuth from '../../hooks/useUserAuth';
 
 const CollectionPage = () => {
-    const {instance, accounts} = useMsal();
-    const user = useAccount(accounts[0] || {});
     const [data, setData] = useState('');
-    const [userToken, setUserToken] = useState('')
+    const [user, token] = useUserAuth();
     
     const fetechDataInCollectionTable = () => {
-      const tokenRequest = {
-        scopes: [`https://${process.env.REACT_APP_AAD_DYNAMICS_ENVIRONMENT}.api.crm.dynamics.com/user_impersonation`],
-        account: accounts[0],
-      };
-      if(user) {
-        instance
-        .acquireTokenSilent(tokenRequest)
-        .then((response) => {
-          setUserToken(response.accessToken);
-          callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'collection')
-          .then((data) => {
-              setData(data);
-
-            });
-        })
-        .catch((error) => {
-            if (error instanceof InteractionRequiredAuthError) {
-              instance.acquireTokenPopup(tokenRequest)
-              .then((response) => {
-                callMsDataverse(response.accessToken, user.idTokenClaims.oid, 'collection')
-                .then((data) => setData(data));
-              });
-            }
-          }); 
-      }  
+      if(user&&token) {
+        callMsDataverse(token, user?.idTokenClaims?.oid, 'collection')
+        .then(data => setData(data));
       }
+    }
     useEffect(() => {
       fetechDataInCollectionTable();
-    }, [instance, accounts,])
+    }, [user, token])
     return(
         <div>
             <h1> 
@@ -49,8 +25,8 @@ const CollectionPage = () => {
                 return (
                     <SetsInfoInCollectionPage 
                         setData = {setData}
-                        userToken = {userToken}
-                        user = {user}
+                        // userToken = {userToken}
+                        // user = {user}
                         img = {set.cr8fb_setimageurl}
                         setName = {set.cr8fb_name}
                         setNumber = {set.cr8fb_setnumber}  
