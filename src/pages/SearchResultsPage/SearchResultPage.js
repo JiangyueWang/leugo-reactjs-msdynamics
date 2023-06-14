@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import DisplaySearchResults from '../../components/SearchResultsPageComponents/DisplaySearchResults';
 const SearchResultPage = () => {
     // declare a searchParams state variable to get the value of URL params keys
     const [searchParams] = useSearchParams();
@@ -17,17 +18,17 @@ const SearchResultPage = () => {
             });
             setSearchResult(response.data.results);
             } catch (error) {
-                console.log(error.response.data);
+                console.log(error);
             }
     }
     useEffect(() => {
         FetchResultsFromRebricableApi();
-        console.log(searchResult)
     }, [searchValue])
     return(
         <div>
 
             searched... {searchValue}
+            <DisplaySearchResults searchResult={searchResult}/>
         </div>
     )
 }

@@ -25,9 +25,7 @@ function App() {
                                               <CollectionPage />
                                             </AuthenticatedTemplate>} />
             <Route path="/search" element={
-                                          <UnauthenticatedTemplate>
-                                            <SearchResultPage />
-                                          </UnauthenticatedTemplate> } />
+                                            <SearchResultPage />} />
             <Route path="/" element=
             {<UnauthenticatedTemplate>
               <UnauthenticatedHomePage />
