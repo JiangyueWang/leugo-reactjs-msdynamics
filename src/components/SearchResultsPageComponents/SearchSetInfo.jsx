@@ -6,7 +6,8 @@ const SearchSetInfo = (props) => {
     const [user, token] = useUserAuth();
     const reference = useRef();
     const [addToCollectionBtnIsClicked, setAddToCollectionBtnIsClicked] = useState(false);
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState({});
+    const [addToCollectionBtnText, setAddToCollectionBtnText] = useState('add');
     
     const handleAddToCollectionClick = () => {
         setAddToCollectionBtnIsClicked(true);
@@ -18,6 +19,7 @@ const SearchSetInfo = (props) => {
     }
     const handleAddSetToCollectionSubmission = async (event) => {
         event.preventDefault();
+        setAddToCollectionBtnText('adding')
          // get the theme name from the Rebricable api
          try {
             let response = await axios.get(`https://rebrickable.com/api/v3/lego/themes/${props.result.theme_id}`, {
@@ -66,7 +68,9 @@ const SearchSetInfo = (props) => {
                     'Content-Type': 'application/json',
                 }; 
                 const response = await axios.post('https://org1846e615.api.crm.dynamics.com/api/data/v9.2/cr8fb_collections', setInfo, { headers });
-                console.log(response)
+                if(response.status === 204) {
+                    setAddToCollectionBtnText('added')
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -84,7 +88,7 @@ const SearchSetInfo = (props) => {
                         <span>purchase date</span><input type='date' onChange={onChangeInput} name='purchasedate'></input>
                         <p></p>
                         <span>build completion date</span><input type='date' onChange={onChangeInput} name='buildcompletiondate'></input>
-                        <button type='submit'>add</button>
+                        <button type='submit'>{addToCollectionBtnText}</button>
                     </form>
                 ) : null}
             </div>
