@@ -6,7 +6,7 @@ import axios from 'axios';
 export const callMsDataverse = async (accessToken, useroid, page) => {
   let urls; 
   // url to return sets for loggin user
-  const url = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections?$filter=_cr8fb_aaduser_value eq '${useroid}'`;
+  const url = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections?$filter=_cr8fb_aaduser_value eq '${useroid}'&$orderby=createdon desc`;
   //sum of all number of parts
   const url1 = `${process.env.REACT_APP_DATAVERSE_WEB_END_API}/cr8fb_collections?$filter=_cr8fb_aaduser_value eq '${useroid}'
                           &$apply=aggregate(cr8fb_numberofparts with sum as partstotal)`;
